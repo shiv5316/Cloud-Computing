@@ -1,0 +1,71 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Launch an EC2 instance using CloudFormation
+
+Parameters:
+  KeyName:
+    Description: Name of an existing EC2 KeyPair to enable SSH access
+    Type: AWS::EC2::KeyPair::KeyName
+
+Resources:
+  MyEC2SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable SSH access
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+
+  MyEC2Instance1:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      KeyName: !Ref KeyName
+      ImageId: ami-0ff8a91507f77f867
+      SubnetId: subnet-082759e4f2285b7b2
+      SecurityGroupIds:
+        - !GetAtt MyEC2SecurityGroup.GroupId
+      Tags:
+        - Key: Name
+          Value: MyEC2Instance1
+
+  MyEC2Instance2:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      KeyName: !Ref KeyName
+      ImageId: ami-0ff8a91507f77f867
+      SubnetId: subnet-082759e4f2285b7b2
+      SecurityGroupIds:
+        - !GetAtt MyEC2SecurityGroup.GroupId
+      Tags:
+        - Key: Name
+          Value: MyEC2Instance2
+
+  MyEC2Instance3:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.micro
+      KeyName: !Ref KeyName
+      ImageId: ami-0ff8a91507f77f867
+      SubnetId: subnet-082759e4f2285b7b2
+      SecurityGroupIds:
+        - !GetAtt MyEC2SecurityGroup.GroupId
+      Tags:
+        - Key: Name
+          Value: MyEC2Instance3
+
+Outputs:
+  Instance1Id:
+    Description: ID of EC2 instance 1
+    Value: !Ref MyEC2Instance1
+
+  Instance2Id:
+    Description: ID of EC2 instance 2
+    Value: !Ref MyEC2Instance2
+
+  Instance3Id:
+    Description: ID of EC2 instance 3
+    Value: !Ref MyEC2Instance3
+
